@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Item from "./Item/Item";
 
-const Items = () => {
-  const [items, setItems] = useState([
+function Items(props){
+
+  const itemsData =[
     {
       id: 1,
       name: "Producto 1",
@@ -51,7 +52,29 @@ const Items = () => {
       description: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
       img: "product-6.jpg",
     },
-  ]);
+  ]
+
+  const [items, setItems] = useState([]);
+
+   useEffect(
+    () => {
+      let promiseItems = new Promise((resolve, reject) => {
+        setTimeout(
+          () => {
+            resolve(itemsData);
+        }, 2000);
+      });
+
+      promiseItems.then(
+        (respuesta) =>{
+          setItems(itemsData);
+        }
+      ).catch(
+        (errorMsg) => console.log(errorMsg)
+      )
+    },
+    []
+  )
 
   return (
     <div className="row">
